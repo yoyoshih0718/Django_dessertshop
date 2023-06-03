@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}所有商品{% endif %}
+{% endblock %}
+{% block content %}
+
+<header>
+    <div class="header-banner">
+        <img src="../../../static/img/banner.png" width=100% height="300" />
+    </div>
+</header>
+
+<body >
+    <div class="row box" >
+        <div class="col-md-9">
+            <h2 style="text-align: center"><font color="#592d05
+                " size="6" face="monospace">{% if category %}{{ category.name }}{% else %}所有商品{% endif %}</font></h2>
+            <div class="row" style="border-white">
+                {% for product in products %}
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{% if product.image %}{{ product.image.url }}
+                                    {% else %}{% static "img/no_image.png" %} {% endif %}">
+                            </a>
+                            <a href="{{ product.get_absolute_url }}"><font color="#592d05" size="4">{{ product.name }}</font></a><br>
+                            <font color="#592d05" size="3">${{ product.price }}</font>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

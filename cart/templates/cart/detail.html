@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block title %}
+    喵力購物車
+{% endblock %}
+
+{% block content %}
+<body >
+    <div class="row box" >
+        <div class="col-sm-12" >
+            <h2 ><font color="#592d05" size="6" face="monospace">{% if category %}{{ category.name }}{% else %}購物車{% endif %}</font></h2>
+            <br>
+            <table width="100%" style="table-layout:fixed;word-break:break-all" class="table table-hover " >
+                <thead>
+                <tr>
+                    <th><font color="#592d05" face="monospace">商品</font></th>
+                    <th class="text-center"><font color="#592d05" face="monospace">數量</font></th>
+                    <th class="text-center"><font color="#592d05" face="monospace">單價</font></th>
+                    <th class="text-center"><font color="#592d05" face="monospace">總價</font></th>
+                    <th> </th>
+                </tr>       
+                </thead>
+                <tbody>
+
+                {% for item in cart %}
+                    {% with product=item.product %}
+                        <tr>
+                            <td class="col-sm-6 col-md-6">
+                                <div class="media">
+                                    <a class="thumbnail pull-left" href="{{ product.get_absolute_url }}">
+                                        <img class="media-object"
+                                            src="{% if product.image %}{{ product.image.url }}
+                                                {% else %}{% static "img/no_image.png" %}{% endif %}"
+                                                style="width: 72px; height: 72px;">
+                                    </a>
+                                    &emsp;
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><a
+                                                href="{{ product.get_absolute_url }}"><font color="#592d05">{{ product.name }}</font></a></h4>
+                                        <span>庫存: </span><span class="text-success"><br><strong><font color="#000000">尚有存貨</font></strong></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="col-sm-1 col-sm-1" style="text-align: center">
+                                <form action="{% url "cart:cart_add" product.id %}" method="post">
+                                    {% csrf_token %}
+                                    <div width="10">
+                                    {% bootstrap_field item.update_quantity_form.quantity show_label=False %}
+                                    {% bootstrap_field item.update_quantity_form.update %}
+                                    </div>
+                                    {% buttons %}
+                                        <button type="submit" class="btn btn-success btn-product" style="background-color: #f7efe4; color:#592d05; border: none">
+                                            更新
+                                        </button>
+                                    {% endbuttons %}
+                                </form>
+                            </td>
+                            <td class="col-sm-1 col-sm-1 text-center"><strong>${{ item.price }}</strong></td>
+                            <td class="col-sm-1 col-sm-1 text-center"><strong>${{ item.total_price }}</strong></td>
+
+                            <td class="col-sm-1 col-sm-1">
+                                &emsp;
+                                <a href="{% url "cart:cart_remove" product.id %}" class="btn btn-danger">
+                                    <i class="glyphicon glyphicon-remove" aria-hidden="true"></i> 移除
+                                </a>
+                            </td>
+                        </tr>
+                    {% endwith %}
+                {% endfor %}
+
+                <tr>
+                    <td>  </td>
+                    <td>  </td>
+                    <td>  </td>
+                    <td><h3>Total</h3></td>
+                    <td class="text-right"><h3><strong>${{ cart.get_total_price }}</strong></h3></td>
+                </tr>
+                <tr>
+                    <td>  </td>
+                    <td>  </td>
+                    <td>  </td>
+                    <td>
+                        <a href="{% url "shop:product_list" %}" class="btn btn-default" style="background-color: antiquewhite; color:#592d05; border: none">
+                            繼續購物 <i class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    <td>
+                    {% comment %} 檢查cart是否為空 {% endcomment %}
+                    {% if cart %}
+                        <a href="{% url "orders:order_create" %}" class="btn btn-default" style="background-color: antiquewhite; color:#592d05; border: none">結帳 <i
+                                class="glyphicon glyphicon-play" aria-hidden="true"></i>
+                        </a>
+                        {% else %}
+                        <font color="#592d05" size="3">購物車空蕩蕩，老闆好桑心இдஇ</font>
+                    {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+{% endblock %}

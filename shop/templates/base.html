@@ -1,0 +1,61 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}喵力甜點店{% endblock %}</title>
+
+    <link href="../../static/css/bootstrap-4.4.1.css" rel="stylesheet" type="text/css">
+    <link href="../../static/css/style.css" rel="stylesheet" type="text/css">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+</head>
+<body >
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white shadow p-3 mb-5 bg-body rounded" style="height:6.5%"> 
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <font color="#592d05" size="5" face="monospace">目錄</font> </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown1" style="margin-top: 10%">
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" style="margin-left: 1.7%;"  type="search" placeholder="Search" aria-label="Search">
+                        </form>
+                        <a class="dropdown-item" href="/listall">所有商品</a><a class="dropdown-item" href="/cookie">手工餅乾</a> <a class="dropdown-item" href="/cake">冷藏蛋糕</a> <a class="dropdown-item" href="/sweet">常溫甜點</a> <a class="dropdown-item" href="/gift">送禮必備</a><a class="dropdown-item" href="/about">關於喵力</a> 	
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <a href="/" width="100" style="padding-top:0.3%">
+            <img src="../../../static/img/喵力上色舌頭三花.png" width="45" height="50" alt="" style="padding-bottom:12px"/>
+            <font color="#592d05" size="6" face="monospace">喵力甜點店 </font>
+        </a>
+        &emsp; &emsp;
+        <a href="/cart"><input type="image" src="../../../static/img/購物車.png" width="28" height="28" alt="購物車"/></a>
+    </nav>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <center>
+    <div class="card col-md-12" style="background-color: linen ; width:100% " > 
+        <div class="card-body">
+            <br>
+            <br>
+            <img src="../../../static/img/LOGO.png" width="180" height="180" alt=""/>
+            <p class="card-text">歡迎追蹤按讚
+                <br>
+                Facebook &nbsp; instagram
+            </p>
+            <img style="position: relative;top:-30px" src="../../../static/img/搜尋喵力-02.png" width="180" height="75" alt="搜尋喵力"/> 
+        </div>
+    </div>
+</center>
+</body>
+</html>
